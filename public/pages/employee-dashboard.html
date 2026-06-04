@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>
+Employee Dashboard
+</title>
+
+<link
+rel="stylesheet"
+href="../css/style.css">
+
+<link
+rel="stylesheet"
+href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.47.0/tabler-icons.min.css">
+
+</head>
+
+<body>
+
+<div class="layout">
+
+<aside class="sidebar">
+
+<div>
+
+<div class="logo">
+
+<i class="ti ti-user"></i>
+
+<span>
+Employee Portal
+</span>
+
+</div>
+
+<nav>
+
+<a class="active">
+
+<i class="ti ti-home"></i>
+
+Dashboard
+
+</a>
+
+<a href="#taskContainer">
+
+<i class="ti ti-checklist"></i>
+
+My Tasks
+
+</a>
+<a href="/pages/my-projects.html">
+<i class="ti ti-briefcase"></i>
+
+My Projects
+
+</a>
+
+<a href="/pages/my-attendance.html">
+
+<i class="ti ti-calendar-check"></i>
+
+My Attendance
+
+</a>
+
+
+
+</nav>
+
+</div>
+
+<nav>
+
+<a onclick="logout()">
+
+<i class="ti ti-logout"></i>
+
+Logout
+
+</a>
+
+</nav>
+
+</aside>
+
+<main class="main">
+
+<div class="page-title">
+
+<h1>
+Employee Dashboard
+</h1>
+
+<p>
+Welcome back employee
+</p>
+
+</div>
+
+<div class="stats-grid">
+
+<div class="stat-card">
+
+<div class="stat-icon blue">
+
+<i class="ti ti-calendar-check"></i>
+
+</div>
+
+<div>
+
+<h2>
+96%
+</h2>
+
+<p>
+Attendance
+</p>
+
+</div>
+
+</div>
+
+<div class="stat-card">
+
+<div class="stat-icon green">
+
+<i class="ti ti-briefcase"></i>
+
+</div>
+
+<div>
+
+<h2 id="taskCount">
+0
+</h2>
+
+<p>
+Assigned Tasks
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="section">
+
+<h2>
+My Attendance
+</h2>
+
+<button onclick="checkIn()">
+
+Check In
+
+</button>
+
+<button onclick="checkOut()">
+
+Check Out
+
+</button>
+
+</div>
+
+<h2>
+My Tasks
+</h2>
+
+<div id="taskContainer"
+style="margin-top:20px;">
+
+</div>
+
+</div>
+
+</main>
+
+</div>
+
+<script>
+
+async function loadTasks(){
+
+const response =
+await fetch(
+"/api/tasks/all"
+);
+
+const tasks =
+await response.json();
+
+const email =
+localStorage.getItem(
+"userEmail"
+);
+
+const myTasks =
+tasks.filter(
+task =>
+task.assignedTo === email
+);
+
+document.getElementById(
+"taskCount"
+).innerText =
+myTasks.length;
+
+const container =
+document.getElementById(
+"taskContainer"
+);
+
+container.innerHTML = "";
+
+myTasks.forEach((task) => {
+
+container.innerHTML += `
+
+<div class="activity">
+
+<h3>
+${task.taskName}
+</h3>
+
+<p>
+Project:
+${task.project}
+</p>
+
+<p>
+Status:
+</p>
+
+<select
+onchange="
+updateMyTask(
+'${task._id}',
+this.value
+)
+">
+
+<option
+${task.status==="Pending"?
+"selected":""}>
+Pending
+</option>
+
+<option
+${task.status==="In Progress"?
+"selected":""}>
+In Progress
+</option>
+
+<option
+${task.status==="Completed"?
+"selected":""}>
+Completed
+</option>
+
+</select>
+
+<p>
+Deadline:
+${task.deadline}
+</p>
+
+</div>
+
+`;
+
+});
+
+}
+async function updateMyTask(
+id,
+status
+){
+
+await fetch(
+
+`/api/tasks/update/${id}`,
+
+{
+method:"PUT",
+
+headers:{
+"Content-Type":
+"application/json"
+},
+
+body:JSON.stringify({
+status
+})
+
+}
+
+);
+
+loadTasks();
+
+}
+
+function logout(){
+
+localStorage.clear();
+
+window.location.href =
+"/pages/login.html";
+
+}
+async function updateTaskStatus(
+id,
+status
+){
+
+await fetch(
+
+`/api/tasks/update/${id}`,
+
+{
+method:"PUT",
+
+headers:{
+"Content-Type":
+"application/json"
+},
+
+body:JSON.stringify({
+
+status
+
+})
+
+}
+
+);
+
+loadTasks();
+
+}
+
+async function checkIn(){
+
+const email =
+localStorage.getItem(
+"userEmail"
+);
+
+const response =
+await fetch(
+"/api/attendance/checkin",
+{
+method:"POST",
+
+headers:{
+"Content-Type":
+"application/json"
+},
+
+body:JSON.stringify({
+
+employeeEmail:email
+
+})
+
+}
+);
+
+const data =
+await response.json();
+
+alert(
+data.message
+);
+
+}
+
+async function checkOut(){
+
+const email =
+localStorage.getItem(
+"userEmail"
+);
+
+await fetch(
+
+`/api/attendance/checkout/${email}`,
+
+{
+method:"PUT"
+}
+
+);
+
+alert(
+"Checked Out Successfully"
+);
+
+}
+
+loadTasks();
+
+</script>
+
+<script src="../js/employee.js"></script>
+
+</body>
+
+</html>

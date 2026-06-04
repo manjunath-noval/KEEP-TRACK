@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>
+My Tasks
+</title>
+
+<link
+rel="stylesheet"
+href="../css/style.css">
+
+</head>
+
+<body>
+
+<div class="layout">
+
+<main class="main">
+
+<div class="page-title">
+
+<h1>
+My Tasks
+</h1>
+
+<p>
+Tasks assigned to you
+</p>
+
+</div>
+
+<div class="section">
+
+<div id="taskContainer">
+
+</div>
+
+</div>
+
+</main>
+
+</div>
+
+<script>
+
+async function loadTasks(){
+
+const email =
+localStorage.getItem(
+"userEmail"
+);
+
+const response =
+await fetch(
+"/api/tasks/all"
+);
+
+const tasks =
+await response.json();
+
+const myTasks =
+tasks.filter(
+task =>
+task.assignedTo === email
+);
+
+const container =
+document.getElementById(
+"taskContainer"
+);
+
+container.innerHTML = "";
+
+myTasks.forEach((task) => {
+
+container.innerHTML += `
+
+<div class="activity">
+
+<h3>
+${task.taskName}
+</h3>
+
+<p>
+Project:
+${task.project}
+</p>
+
+<p>
+Status:
+${task.status}
+</p>
+
+<p>
+Deadline:
+${task.deadline}
+</p>
+
+</div>
+
+`;
+
+});
+
+}
+
+loadTasks();
+
+</script>
+
+</body>
+
+</html>

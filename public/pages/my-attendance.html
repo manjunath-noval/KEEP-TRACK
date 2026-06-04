@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>
+My Attendance
+</title>
+
+<link
+rel="stylesheet"
+href="../css/style.css">
+
+</head>
+
+<body>
+
+<div class="main">
+
+<h1>
+My Attendance
+</h1>
+
+<table style="width:100%;">
+
+<thead>
+
+<tr>
+
+<th>Date</th>
+<th>Check In</th>
+<th>Check Out</th>
+
+</tr>
+
+</thead>
+
+<tbody id="attendanceTable">
+
+</tbody>
+
+</table>
+
+</div>
+
+<script>
+
+async function loadAttendance(){
+
+const email =
+localStorage.getItem(
+"userEmail"
+);
+
+const response =
+await fetch(
+"/api/attendance/all"
+);
+
+const records =
+await response.json();
+
+const myAttendance =
+records.filter(record =>
+
+record.employeeEmail ===
+email
+
+);
+
+const table =
+document.getElementById(
+"attendanceTable"
+);
+
+table.innerHTML = "";
+
+myAttendance.forEach((record)=>{
+
+table.innerHTML += `
+
+<tr>
+
+<td>
+${record.date}
+</td>
+
+<td>
+${record.checkIn || "-"}
+</td>
+
+<td>
+${record.checkOut || "-"}
+</td>
+
+</tr>
+
+`;
+
+});
+
+}
+
+loadAttendance();
+
+</script>
+
+</body>
+
+</html>

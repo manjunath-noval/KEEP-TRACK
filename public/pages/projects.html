@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>
+Projects
+</title>
+
+<link
+rel="stylesheet"
+href="../css/style.css">
+
+</head>
+
+<body>
+
+<div class="layout">
+
+<aside class="sidebar">
+
+<div class="logo">
+
+<span>
+Projects
+</span>
+
+</div>
+
+</aside>
+
+<main class="main">
+
+<div class="page-title">
+
+<h1>
+Projects
+</h1>
+
+<p>
+Manage company projects
+</p>
+
+</div>
+
+<div class="section">
+
+<form id="projectForm">
+
+<input
+type="text"
+id="projectName"
+placeholder="Project Name"
+required>
+
+<input
+type="text"
+id="projectManager"
+placeholder="Manager"
+required>
+
+<input
+type="text"
+id="assignedEmployees"
+placeholder="Employee Emails (comma separated)">
+
+<input
+type="text"
+id="projectDeadline"
+placeholder="Deadline">
+
+<textarea
+id="projectDescription"
+placeholder="Description">
+
+</textarea>
+
+<button type="submit">
+
+Create Project
+
+</button>
+
+</form>
+
+</div>
+
+<div class="section">
+
+<h2>
+Project List
+</h2>
+
+<div id="projectsContainer">
+
+</div>
+
+</div>
+
+</main>
+
+</div>
+
+<script>
+
+const form =
+document.getElementById(
+"projectForm"
+);
+
+form.addEventListener(
+"submit",
+async (e) => {
+
+e.preventDefault();
+
+await fetch(
+"/api/projects/add",
+{
+method:"POST",
+
+headers:{
+"Content-Type":
+"application/json"
+},
+
+body:JSON.stringify({
+
+projectName:
+document.getElementById(
+"projectName"
+).value,
+
+manager:
+document.getElementById(
+"projectManager"
+).value,
+
+assignedEmployees:
+document.getElementById(
+"assignedEmployees"
+).value
+.split(","),
+
+deadline:
+document.getElementById(
+"projectDeadline"
+).value,
+
+description:
+document.getElementById(
+"projectDescription"
+).value
+
+})
+
+}
+);
+
+loadProjects();
+
+form.reset();
+
+}
+);
+
+async function loadProjects(){
+
+const response =
+await fetch(
+"/api/projects/all"
+);
+
+const projects =
+await response.json();
+
+const container =
+document.getElementById(
+"projectsContainer"
+);
+
+container.innerHTML = "";
+
+projects.forEach((project) => {
+
+container.innerHTML += `
+
+<div class="activity">
+
+<h3>
+${project.projectName}
+</h3>
+
+<p>
+${project.description}
+</p>
+
+<p>
+Manager:
+${project.manager}
+</p>
+
+<p>
+Employees:
+${project.assignedEmployees.join(", ")}
+</p>
+
+<p>
+
+Status:
+
+<select
+onchange="
+updateProject(
+'${project._id}',
+this.value,
+null
+)
+">
+
+<option
+${project.status==="Pending"?"selected":""}>
+
+Pending
+
+</option>
+
+<option
+${project.status==="In Progress"?"selected":""}>
+
+In Progress
+
+</option>
+
+<option
+${project.status==="Completed"?"selected":""}>
+
+Completed
+
+</option>
+
+</select>
+
+</p>
+
+<p>
+
+Progress:
+
+<input
+type="number"
+min="0"
+max="100"
+value="${project.progress}"
+
+onchange="
+updateProject(
+'${project._id}',
+null,
+this.value
+)
+">
+
+%
+
+</p>
+
+<div
+style="
+width:100%;
+height:10px;
+background:#ddd;
+border-radius:20px;
+overflow:hidden;
+margin-top:10px;
+">
+
+<div
+style="
+width:${project.progress}%;
+height:100%;
+background:#2563eb;
+">
+
+</div>
+
+</div>
+
+</div>
+
+`;
+
+});
+
+}
+
+loadProjects();
+
+</script>
+
+</body>
+
+</html>

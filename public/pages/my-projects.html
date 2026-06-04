@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>
+My Projects
+</title>
+
+<link
+rel="stylesheet"
+href="../css/style.css">
+
+</head>
+
+<body>
+
+<div class="main">
+
+<h1>
+My Projects
+</h1>
+
+<div id="projectsContainer">
+
+</div>
+
+</div>
+
+<script>
+
+async function loadProjects(){
+
+const email =
+localStorage.getItem(
+"userEmail"
+);
+console.log(email);
+
+const response =
+await fetch(
+"/api/projects/all"
+);
+
+const projects =
+await response.json();
+
+console.log(projects);
+
+const myProjects =
+projects.filter(project =>
+
+project.assignedEmployees &&
+project.assignedEmployees.includes(
+email
+)
+
+);
+
+const container =
+document.getElementById(
+"projectsContainer"
+);
+
+container.innerHTML = "";
+
+myProjects.forEach((project)=>{
+
+container.innerHTML += `
+
+<div class="activity">
+
+<h3>
+${project.projectName}
+</h3>
+
+<p>
+${project.description}
+</p>
+
+<p>
+Manager:
+${project.manager}
+</p>
+
+<p>
+Deadline:
+${project.deadline}
+</p>
+
+<p>
+Status:
+${project.status}
+</p>
+
+</div>
+
+`;
+
+});
+
+}
+
+loadProjects();
+
+</script>
+
+</body>
+
+</html>

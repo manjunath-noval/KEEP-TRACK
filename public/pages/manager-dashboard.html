@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>
+Manager Dashboard
+</title>
+
+<link
+rel="stylesheet"
+href="../css/style.css">
+
+<link
+rel="stylesheet"
+href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.47.0/tabler-icons.min.css">
+
+</head>
+
+<body>
+
+<div class="layout">
+
+<!-- SIDEBAR -->
+
+<aside class="sidebar">
+
+<div>
+
+<div class="logo">
+
+<i class="ti ti-briefcase"></i>
+
+<span>
+Manager Portal
+</span>
+
+</div>
+
+<nav>
+
+<a
+class="active"
+href="/pages/manager-dashboard.html">
+
+<i class="ti ti-layout-dashboard"></i>
+
+Dashboard
+
+</a>
+
+<a href="/pages/projects.html">
+
+<i class="ti ti-folder"></i>
+
+Projects
+
+</a>
+
+<a href="/pages/tasks.html">
+
+<i class="ti ti-checklist"></i>
+
+Tasks
+
+</a>
+
+</nav>
+
+</div>
+
+<nav>
+
+<a onclick="logout()">
+
+<i class="ti ti-logout"></i>
+
+Logout
+
+</a>
+
+</nav>
+
+</aside>
+
+<!-- MAIN -->
+
+<main class="main">
+
+<div class="page-title">
+
+<h1>
+Manager Dashboard
+</h1>
+
+<p>
+Manage projects and teams
+</p>
+
+</div>
+
+<div class="stats-grid">
+
+<div class="stat-card">
+
+<div class="stat-icon blue">
+
+<i class="ti ti-folder"></i>
+
+</div>
+
+<div>
+
+<h2 id="projectCount">
+0
+</h2>
+
+<p>
+Projects
+</p>
+
+</div>
+
+</div>
+
+<div class="stat-card">
+
+<div class="stat-icon green">
+
+<i class="ti ti-checklist"></i>
+
+</div>
+
+<div>
+
+<h2 id="taskCount">
+0
+</h2>
+
+<p>
+Tasks
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="section">
+
+<h2>
+Recent Projects
+</h2>
+
+<div id="projectList"
+style="margin-top:20px;">
+
+</div>
+
+</div>
+
+</main>
+
+</div>
+
+<script>
+
+async function loadProjects(){
+
+const response =
+await fetch(
+"/api/projects/all"
+);
+
+const projects =
+await response.json();
+
+document.getElementById(
+"projectCount"
+).innerText =
+projects.length;
+
+const list =
+document.getElementById(
+"projectList"
+);
+
+list.innerHTML = "";
+
+projects.forEach((project) => {
+
+list.innerHTML += `
+
+<div class="activity">
+
+<strong>
+${project.projectName}
+</strong>
+
+- ${project.status}
+
+</div>
+
+`;
+
+});
+
+}
+
+async function loadTasks(){
+
+const response =
+await fetch(
+"/api/tasks/all"
+);
+
+const tasks =
+await response.json();
+
+document.getElementById(
+"taskCount"
+).innerText =
+tasks.length;
+
+}
+
+function logout(){
+
+localStorage.clear();
+
+window.location.href =
+"/pages/login.html";
+
+}
+
+loadProjects();
+
+loadTasks();
+
+</script>
+
+<script src="../js/manager.js"></script>
+
+</body>
+
+</html>

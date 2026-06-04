@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>
+Analytics
+</title>
+
+<link
+rel="stylesheet"
+href="../css/style.css">
+
+<link
+rel="stylesheet"
+href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.47.0/tabler-icons.min.css">
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+
+<body>
+
+<div class="layout">
+
+<aside class="sidebar">
+
+<div>
+
+<div class="logo">
+
+<i class="ti ti-chart-bar"></i>
+
+<span>
+ProTrack
+</span>
+
+</div>
+
+<nav>
+
+<a href="/pages/dashboard.html">
+
+<i class="ti ti-layout-dashboard"></i>
+
+Dashboard
+
+</a>
+
+<a href="/pages/employees.html">
+
+<i class="ti ti-users"></i>
+
+Employees
+
+</a>
+
+<a href="/pages/attendance.html">
+
+<i class="ti ti-calendar-check"></i>
+
+Attendance
+
+</a>
+
+<a
+class="active"
+href="/pages/analytics.html">
+
+<i class="ti ti-chart-line"></i>
+
+Analytics
+
+</a>
+
+<a href="/pages/settings.html">
+
+<i class="ti ti-settings"></i>
+
+Settings
+
+</a>
+
+</nav>
+
+</div>
+
+</aside>
+
+<main class="main">
+
+<div class="page-title">
+
+<h1>
+Analytics
+</h1>
+
+<p>
+Employee performance analytics
+</p>
+
+</div>
+
+<div class="charts-grid">
+
+<div class="chart-card">
+
+<h3>
+Performance Chart
+</h3>
+
+<canvas id="performanceChart"></canvas>
+
+</div>
+
+<div class="chart-card">
+
+<h3>
+Department Distribution
+</h3>
+
+<canvas id="departmentChart"></canvas>
+
+</div>
+
+</div>
+
+</main>
+
+</div>
+
+<script>
+
+async function loadAnalytics(){
+
+const response =
+await fetch(
+"/api/employees/all"
+);
+
+const employees =
+await response.json();
+
+/* PERFORMANCE */
+
+const performanceData =
+employees.map(
+employee =>
+employee.performance || 0
+);
+
+const employeeNames =
+employees.map(
+employee =>
+employee.name
+);
+
+new Chart(
+
+document.getElementById(
+"performanceChart"
+),
+
+{
+type:"bar",
+
+data:{
+
+labels:
+employeeNames,
+
+datasets:[
+{
+label:"Performance",
+
+data:
+performanceData,
+
+backgroundColor:
+"#2563eb"
+}
+]
+
+}
+
+}
+
+);
+
+/* DEPARTMENT */
+
+const departments = {};
+
+employees.forEach(
+(employee)=>{
+
+departments[
+employee.department
+] =
+
+(departments[
+employee.department
+] || 0) + 1;
+
+}
+);
+
+new Chart(
+
+document.getElementById(
+"departmentChart"
+),
+
+{
+type:"doughnut",
+
+data:{
+
+labels:
+Object.keys(
+departments
+),
+
+datasets:[
+{
+data:
+Object.values(
+departments
+),
+
+backgroundColor:[
+"#2563eb",
+"#10b981",
+"#f59e0b",
+"#8b5cf6",
+"#ef4444"
+]
+}
+]
+
+}
+
+}
+
+);
+
+}
+
+loadAnalytics();
+
+</script>
+
+</body>
+
+</html>

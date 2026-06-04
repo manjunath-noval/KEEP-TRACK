@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>
+Attendance
+</title>
+
+<link
+rel="stylesheet"
+href="../css/style.css">
+
+<link
+rel="stylesheet"
+href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.47.0/tabler-icons.min.css">
+
+</head>
+
+<body>
+
+<div class="layout">
+
+<!-- SIDEBAR -->
+
+<aside class="sidebar">
+
+<div>
+
+<div class="logo">
+
+<i class="ti ti-chart-bar"></i>
+
+<span>
+ProTrack
+</span>
+
+</div>
+
+<nav>
+
+<a href="/pages/dashboard.html">
+
+<i class="ti ti-layout-dashboard"></i>
+
+Dashboard
+
+</a>
+
+<a href="/pages/employees.html">
+
+<i class="ti ti-users"></i>
+
+Employees
+
+</a>
+
+<a
+class="active"
+href="/pages/attendance.html">
+
+<i class="ti ti-calendar-check"></i>
+
+Attendance
+
+</a>
+
+<a href="/pages/analytics.html">
+
+<i class="ti ti-chart-line"></i>
+
+Analytics
+
+</a>
+
+<a href="/pages/settings.html">
+
+<i class="ti ti-settings"></i>
+
+Settings
+
+</a>
+
+</nav>
+
+</div>
+
+</aside>
+
+<!-- MAIN -->
+
+<main class="main">
+
+<div class="page-title">
+
+<h1>
+Attendance
+</h1>
+
+<p>
+Employee attendance records
+</p>
+
+</div>
+
+<div class="section">
+
+<h2>
+Attendance History
+</h2>
+
+<table style="margin-top:20px;width:100%;">
+
+<thead>
+
+<tr>
+
+<th>Employee</th>
+<th>Date</th>
+<th>Check In</th>
+<th>Check Out</th>
+
+</tr>
+
+</thead>
+
+<tbody id="attendanceTable">
+
+<tr>
+
+<td colspan="3">
+
+No Attendance Data
+
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</main>
+
+</div>
+
+<script>
+
+async function loadAttendance(){
+
+const response =
+await fetch(
+"/api/attendance/all"
+);
+
+const attendance =
+await response.json();
+
+const table =
+document.getElementById(
+"attendanceTable"
+);
+
+table.innerHTML = "";
+
+if(attendance.length === 0){
+
+table.innerHTML = `
+
+<tr>
+
+<td colspan="3">
+
+No Attendance Data
+
+</td>
+
+</tr>
+
+`;
+
+}
+
+attendance.forEach((item) => {
+
+table.innerHTML += `
+
+<tr>
+
+<td>
+${item.employeeEmail}
+</td>
+
+<td>
+${item.date}
+</td>
+
+<td>
+${item.checkIn || "-"}
+</td>
+
+<td>
+${item.checkOut || "-"}
+</td>
+
+</tr>
+
+`;
+
+});
+
+}
+
+loadAttendance();
+
+</script>
+
+</body>
+
+</html>
