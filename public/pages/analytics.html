@@ -97,32 +97,137 @@ Settings
 
 <div class="page-title">
 
+<div
+style="
+background:linear-gradient(135deg,#7c3aed,#2563eb);
+padding:30px;
+border-radius:24px;
+color:white;
+display:flex;
+justify-content:space-between;
+align-items:center;
+flex-wrap:wrap;
+gap:20px;
+">
+
+<div>
+
 <h1>
-Analytics
+
+📊 Analytics Dashboard
+
 </h1>
 
-<p>
-Employee performance analytics
+<p
+style="
+margin-top:10px;
+color:#ddd6fe;
+">
+
+Track employee performance and department insights.
+
 </p>
+
+</div>
+
+<div
+style="
+text-align:right;
+">
+
+<h2 id="analyticsDate"></h2>
+
+<h3 id="analyticsTime"></h3>
+
+</div>
+
+</div>
+
+</div>
+<div class="stats-grid">
+
+<div class="stat-card">
+
+<div class="stat-icon blue">
+
+📈
+
+</div>
+
+<div>
+
+<h2 id="totalEmployeesAnalytics">
+
+--
+
+</h2>
+
+<p>
+
+Employees
+
+</p>
+
+</div>
+
+</div>
+
+<div class="stat-card">
+
+<div class="stat-icon green">
+
+🏢
+
+</div>
+
+<div>
+
+<h2 id="totalDepartments">
+
+--
+
+</h2>
+
+<p>
+
+Departments
+
+</p>
+
+</div>
+
+</div>
 
 </div>
 
 <div class="charts-grid">
 
-<div class="chart-card">
+<div
+class="chart-card"
+style="
+padding:25px;
+">
 
 <h3>
-Performance Chart
+
+📈 Employee Performance
+
 </h3>
 
 <canvas id="performanceChart"></canvas>
 
 </div>
 
-<div class="chart-card">
+<div
+class="chart-card"
+style="
+padding:25px;
+">
 
 <h3>
-Department Distribution
+
+🥧 Department Distribution
+
 </h3>
 
 <canvas id="departmentChart"></canvas>
@@ -146,6 +251,23 @@ await fetch(
 
 const employees =
 await response.json();
+document.getElementById(
+"totalEmployeesAnalytics"
+).innerText =
+employees.length;
+
+const uniqueDepartments =
+new Set(
+employees.map(
+employee =>
+employee.department
+)
+);
+
+document.getElementById(
+"totalDepartments"
+).innerText =
+uniqueDepartments.size;
 
 /* PERFORMANCE */
 
@@ -251,6 +373,28 @@ backgroundColor:[
 );
 
 }
+function updateAnalyticsClock(){
+
+const now = new Date();
+
+document.getElementById(
+"analyticsDate"
+).innerHTML =
+now.toLocaleDateString();
+
+document.getElementById(
+"analyticsTime"
+).innerHTML =
+now.toLocaleTimeString();
+
+}
+
+updateAnalyticsClock();
+
+setInterval(
+updateAnalyticsClock,
+1000
+);
 
 loadAnalytics();
 
