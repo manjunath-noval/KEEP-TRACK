@@ -35,11 +35,65 @@ href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.47.0/tabler-icons.min
 
 <div class="logo">
 
-<i class="ti ti-briefcase"></i>
+<i class="ti ti-user-star"></i>
 
 <span>
 Manager Portal
 </span>
+<div
+style="
+margin-top:25px;
+margin-bottom:25px;
+padding:20px;
+background:rgba(255,255,255,0.08);
+border-radius:20px;
+text-align:center;
+">
+
+<img
+
+src="https://i.pravatar.cc/100?img=8"
+
+style="
+width:80px;
+height:80px;
+border-radius:50%;
+border:3px solid white;
+">
+
+<h3
+style="margin-top:15px;">
+
+Manager
+
+</h3>
+
+<p
+style="
+color:#cbd5e1;
+font-size:14px;
+">
+
+Project Supervisor
+
+</p>
+
+<span
+style="
+display:inline-block;
+margin-top:10px;
+padding:5px 12px;
+background:#10b981;
+color:white;
+border-radius:999px;
+font-size:12px;
+">
+
+🟢 Online
+
+</span>
+
+</div>
 
 </div>
 
@@ -77,7 +131,19 @@ Tasks
 
 <nav>
 
-<a onclick="logout()">
+<a
+onclick="logout()"
+style="
+cursor:pointer;
+background:#ef4444;
+color:white;
+padding:12px 18px;
+border-radius:14px;
+display:flex;
+align-items:center;
+justify-content:center;
+gap:10px;
+">
 
 <i class="ti ti-logout"></i>
 
@@ -95,13 +161,50 @@ Logout
 
 <div class="page-title">
 
-<h1>
-Manager Dashboard
-</h1>
+    <div style="
+    background:linear-gradient(135deg,#0f766e,#2563eb);
+    border-radius:24px;
+    padding:30px;
+    color:white;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:20px;
+    ">
 
-<p>
-Manage projects and teams
-</p>
+        <div>
+
+            <h1 id="managerGreeting">
+
+                👋 Welcome Manager
+
+            </h1>
+
+            <p
+            style="
+            margin-top:10px;
+            color:#dbeafe;
+            ">
+
+                Manage projects and monitor team productivity.
+
+            </p>
+
+        </div>
+
+        <div
+        style="
+        text-align:right;
+        ">
+
+            <h2 id="managerDate"></h2>
+
+            <h3 id="managerTime"></h3>
+
+        </div>
+
+    </div>
 
 </div>
 
@@ -122,7 +225,9 @@ Manage projects and teams
 </h2>
 
 <p>
-Projects
+
+Active Projects
+
 </p>
 
 </div>
@@ -144,7 +249,7 @@ Projects
 </h2>
 
 <p>
-Tasks
+Assigned Tasks
 </p>
 
 </div>
@@ -198,13 +303,84 @@ projects.forEach((project) => {
 
 list.innerHTML += `
 
-<div class="activity">
+<div
+class="activity"
+style="
+padding:20px;
+border-radius:20px;
+background:linear-gradient(135deg,#ffffff,#f8fbff);
+border:1px solid #dbeafe;
+margin-bottom:20px;
+">
 
-<strong>
-${project.projectName}
-</strong>
+<h3
+style="
+color:#2563eb;
+margin-bottom:10px;
+">
 
-- ${project.status}
+📁 ${project.projectName}
+
+</h3>
+
+<p>
+
+<b>🚦 Status:</b>
+
+${project.status}
+
+</p>
+
+<div
+style="
+margin-top:15px;
+">
+
+<p
+style="
+font-size:14px;
+margin-bottom:8px;
+">
+
+<b>📊 Progress:</b>
+
+${project.progress || 0}%
+
+</p>
+
+<div
+style="
+width:100%;
+height:12px;
+background:#e5e7eb;
+border-radius:20px;
+overflow:hidden;
+">
+
+<div
+style="
+width:${project.progress || 0}%;
+height:100%;
+background:linear-gradient(90deg,#10b981,#2563eb);
+border-radius:20px;
+transition:0.5s;
+">
+
+</div>
+
+</div>
+
+</div>
+
+<p
+style="
+margin-top:10px;
+color:#64748b;
+">
+
+Managed by KEEP.Track
+
+</p>
 
 </div>
 
@@ -239,6 +415,53 @@ window.location.href =
 "/pages/login.html";
 
 }
+
+function updateManagerClock(){
+
+const now = new Date();
+
+const hour = now.getHours();
+
+let greeting = "👋 Welcome Manager";
+
+if(hour < 12){
+
+greeting = "🌞 Good Morning Manager";
+
+}
+
+else if(hour < 18){
+
+greeting = "☀️ Good Afternoon Manager";
+
+}
+
+else{
+
+greeting = "🌙 Good Evening Manager";
+
+}
+
+document.getElementById(
+"managerGreeting"
+).innerHTML =
+greeting;
+
+document.getElementById(
+"managerDate"
+).innerHTML =
+now.toLocaleDateString();
+
+document.getElementById(
+"managerTime"
+).innerHTML =
+now.toLocaleTimeString();
+
+}
+
+updateManagerClock();
+
+setInterval(updateManagerClock,1000);
 
 loadProjects();
 

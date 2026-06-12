@@ -15,15 +15,65 @@ href="../css/style.css">
 
 <body>
 
-<div class="main">
+<div class="layout">
+
+<main class="main">
+
+<div class="page-title">
+
+<div
+style="
+background:linear-gradient(135deg,#2563eb,#7c3aed);
+padding:30px;
+border-radius:24px;
+color:white;
+display:flex;
+justify-content:space-between;
+align-items:center;
+flex-wrap:wrap;
+">
+
+<div>
 
 <h1>
-My Projects
+
+📁 My Projects
+
 </h1>
 
-<div id="projectsContainer">
+<p
+style="
+margin-top:10px;
+color:#dbeafe;
+">
+
+View all projects assigned to you.
+
+</p>
 
 </div>
+
+<div>
+
+<h2 id="myProjectDate"></h2>
+
+<h3 id="myProjectTime"></h3>
+
+</div>
+
+</div>
+
+</div>
+
+<div
+id="projectsContainer"
+style="
+margin-top:30px;
+">
+
+</div>
+
+</main>
 
 </div>
 
@@ -68,10 +118,25 @@ myProjects.forEach((project)=>{
 
 container.innerHTML += `
 
-<div class="activity">
+<div
+class="activity"
+style="
+background:linear-gradient(135deg,#ffffff,#f8fbff);
+padding:24px;
+border-radius:22px;
+border:1px solid #dbeafe;
+box-shadow:0 10px 25px rgba(37,99,235,.08);
+margin-bottom:20px;
+">
 
-<h3>
-${project.projectName}
+<h3
+style="
+color:#2563eb;
+margin-bottom:12px;
+">
+
+📁 ${project.projectName}
+
 </h3>
 
 <p>
@@ -79,18 +144,27 @@ ${project.description}
 </p>
 
 <p>
-Manager:
+
+👨‍💼 <b>Manager:</b>
+
 ${project.manager}
+
 </p>
 
 <p>
-Deadline:
+
+📅 <b>Deadline:</b>
+
 ${project.deadline}
+
 </p>
 
 <p>
-Status:
+
+🚦 <b>Status:</b>
+
 ${project.status}
+
 </p>
 
 </div>
@@ -100,6 +174,28 @@ ${project.status}
 });
 
 }
+function updateMyProjectClock(){
+
+const now = new Date();
+
+document.getElementById(
+"myProjectDate"
+).innerHTML =
+now.toLocaleDateString();
+
+document.getElementById(
+"myProjectTime"
+).innerHTML =
+now.toLocaleTimeString();
+
+}
+
+updateMyProjectClock();
+
+setInterval(
+updateMyProjectClock,
+1000
+);
 
 loadProjects();
 
