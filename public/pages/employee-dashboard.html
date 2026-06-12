@@ -33,11 +33,70 @@ href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.47.0/tabler-icons.min
 
 <div class="logo">
 
-<i class="ti ti-user"></i>
+    <i class="ti ti-user-circle"></i>
 
-<span>
-Employee Portal
-</span>
+    <span>
+
+        Employee Portal
+
+    </span>
+
+</div>
+
+<div
+style="
+margin-top:25px;
+margin-bottom:25px;
+padding:20px;
+border-radius:20px;
+background:rgba(255,255,255,0.08);
+text-align:center;
+">
+
+    <img
+
+    src="https://i.pravatar.cc/100?img=15"
+
+    style="
+    width:80px;
+    height:80px;
+    border-radius:50%;
+    border:3px solid white;
+    ">
+
+    <h3
+    style="
+    margin-top:15px;
+    "
+    id="employeeName">
+
+        Employee
+
+    </h3>
+
+    <p
+    id="employeeEmail"
+    style="
+    color:#cbd5e1;
+    font-size:14px;
+    ">
+
+    </p>
+
+    <span
+    style="
+    display:inline-block;
+    margin-top:10px;
+    background:#10b981;
+    color:white;
+    padding:5px 12px;
+    border-radius:999px;
+    font-size:12px;
+    ">
+
+        🟢 Online
+
+    </span>
 
 </div>
 
@@ -81,7 +140,20 @@ My Attendance
 
 <nav>
 
-<a onclick="logout()">
+<a
+onclick="logout()"
+style="
+cursor:pointer;
+background:#ef4444;
+color:white;
+border-radius:14px;
+padding:12px 18px;
+margin-top:20px;
+display:flex;
+align-items:center;
+gap:10px;
+justify-content:center;
+">
 
 <i class="ti ti-logout"></i>
 
@@ -202,40 +274,71 @@ Assigned Tasks
 
 <div class="section">
 
-<h2>
+    <div style="
+    background:linear-gradient(135deg,#2563eb,#7c3aed);
+    border-radius:24px;
+    padding:30px;
+    color:white;
+    ">
 
-📅 My Attendance
+        <h2>
 
-</h2>
+            📅 Today's Attendance
 
-<p
-style="
-margin:15px 0;
-color:#64748b;
-">
+        </h2>
 
-Mark today's attendance using the buttons below.
+        <p
+        style="
+        margin-top:10px;
+        color:#dbeafe;
+        ">
 
-</p>
+            Keep your attendance updated every day.
 
-<div
-style="
-display:flex;
-gap:15px;
-flex-wrap:wrap;
-">
+        </p>
 
-<button onclick="checkIn()">
+        <div
+        style="
+        margin-top:20px;
+        display:flex;
+        flex-wrap:wrap;
+        gap:15px;
+        ">
 
-✅ Check In
+            <button
+            onclick="checkIn()"
+            style="
+            background:#10b981;
+            ">
 
-</button>
+                ✅ Check In
 
-<button onclick="checkOut()">
+            </button>
 
-🚪 Check Out
+            <button
+            onclick="checkOut()"
+            style="
+            background:#ef4444;
+            ">
 
-</button>
+                🚪 Check Out
+
+            </button>
+
+        </div>
+
+        <div
+        style="
+        margin-top:25px;
+        ">
+
+            <h3 id="attendanceClock">
+
+            </h3>
+
+        </div>
+
+    </div>
 
 </div>
 
@@ -299,19 +402,42 @@ myTasks.forEach((task) => {
 
 container.innerHTML += `
 
-<div class="activity">
+<div class="activity" style="
+background:linear-gradient(135deg,#ffffff,#f8fbff);
+border:1px solid #dbeafe;
+border-radius:20px;
+padding:20px;
+margin-bottom:20px;
+box-shadow:0 8px 20px rgba(37,99,235,0.08);
+transition:0.3s;
+">
 
-<h3>
-${task.taskName}
+<h3 style="
+color:#2563eb;
+font-size:22px;
+margin-bottom:10px;
+">
+
+📌 ${task.taskName}
+
 </h3>
 
-<p>
-Project:
+<p style="margin-bottom:10px;">
+
+<b>📁 Project:</b>
+
 ${task.project}
+
 </p>
 
-<p>
-Status:
+<p style="
+margin-top:12px;
+margin-bottom:8px;
+font-weight:bold;
+">
+
+🚦 Status
+
 </p>
 
 <select
@@ -342,9 +468,12 @@ Completed
 
 </select>
 
-<p>
-Deadline:
+<p style="margin-top:12px;">
+
+<b>⏰ Deadline:</b>
+
 ${task.deadline}
+
 </p>
 
 </div>
@@ -484,6 +613,29 @@ alert(
 function updateEmployeeClock(){
 
     const now = new Date();
+    const employeeEmail =
+localStorage.getItem(
+"userEmail"
+);
+
+if(employeeEmail){
+
+document.getElementById(
+"employeeEmail"
+).innerText =
+employeeEmail;
+
+const name =
+employeeEmail
+.split("@")[0];
+
+document.getElementById(
+"employeeName"
+).innerText =
+name.charAt(0).toUpperCase() +
+name.slice(1);
+
+}
 
     const hour = now.getHours();
 
@@ -515,11 +667,18 @@ function updateEmployeeClock(){
     document.getElementById("employeeTime").innerHTML =
     now.toLocaleTimeString();
 
+    document.getElementById(
+"attendanceClock"
+).innerHTML =
+"🕒 " + now.toLocaleTimeString();
+
 }
 
 updateEmployeeClock();
 
 setInterval(updateEmployeeClock,1000);
+
+
 
 loadTasks();
 
