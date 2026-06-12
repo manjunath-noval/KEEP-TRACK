@@ -1218,3 +1218,37 @@ transition:.3s;
 transform:translateX(6px);
 
 }
+/* ========================= */
+/* DARK THEME */
+/* ========================= */
+
+.dark-theme{
+    background:#020617 !important;
+    color:white !important;
+}
+
+.dark-theme .main{
+    background:#020617 !important;
+}
+
+.dark-theme .section,
+.dark-theme .stat-card,
+.dark-theme .chart-card,
+.dark-theme .activity{
+    background:#0f172a !important;
+    color:white !important;
+    border:1px solid rgba(255,255,255,.08);
+}
+
+.dark-theme input,
+.dark-theme textarea,
+.dark-theme select{
+    background:#1e293b !important;
+    color:white !important;
+}
+
+.dark-theme table,
+.dark-theme th,
+.dark-theme td{
+    color:white !important;
+}
