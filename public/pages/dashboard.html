@@ -135,9 +135,32 @@ href="/pages/settings.html">
         <!-- Notification -->
 
         <button
-        style="
-        position:relative;
-        ">
+style="
+position:relative;
+width:50px;
+height:50px;
+border-radius:50%;
+">
+
+<i class="ti ti-bell"></i>
+
+<span
+style="
+position:absolute;
+top:2px;
+right:2px;
+background:red;
+color:white;
+font-size:10px;
+padding:2px 6px;
+border-radius:50%;
+">
+
+3
+
+</span>
+
+</button>
 
             <i class="ti ti-bell"></i>
 
@@ -213,11 +236,11 @@ href="/pages/settings.html">
 
         <div>
 
-            <h1 style="font-size:42px;">
-
-                👋 Welcome Back, Admin
-
-            </h1>
+            <h1
+id="welcomeText"
+style="font-size:42px;">
+    👋 Welcome
+</h1>
 
             <p style="margin-top:10px;color:#e0e7ff;">
 
@@ -877,17 +900,41 @@ class="profile-avatar">
 
 function updateClock(){
 
-const now=new Date();
-document.getElementById("todayDate").innerHTML =
-now.toDateString();
+    const now = new Date();
 
-document.getElementById("liveDate").innerHTML=
+    const hours = now.getHours();
 
-now.toLocaleDateString();
+    let greeting = "Welcome";
 
-document.getElementById("liveTime").innerHTML=
+    if(hours < 12){
 
-now.toLocaleTimeString();
+        greeting = "🌞 Good Morning";
+
+    }
+
+    else if(hours < 18){
+
+        greeting = "☀️ Good Afternoon";
+
+    }
+
+    else{
+
+        greeting = "🌙 Good Evening";
+
+    }
+
+    document.getElementById("liveDate").innerHTML =
+    now.toLocaleDateString();
+
+    document.getElementById("liveTime").innerHTML =
+    now.toLocaleTimeString();
+
+    document.getElementById("todayDate").innerHTML =
+    now.toDateString();
+
+    document.getElementById("welcomeText").innerHTML =
+    greeting + ", Admin";
 
 }
 
