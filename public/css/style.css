@@ -58,6 +58,12 @@ color:#0f172a;
     font-size:24px;
     font-weight:700;
     margin-bottom:50px;
+    transition:.3s;
+}
+.logo:hover{
+
+transform:scale(1.03);
+
 }
 
 .logo i{
@@ -1145,5 +1151,59 @@ textarea:focus{
     border-color:#2563eb;
 
     box-shadow:0 0 0 4px rgba(37,99,235,0.12);
+
+}
+.profile{
+
+transition:.3s;
+
+}
+
+.profile:hover{
+
+transform:translateY(-3px);
+
+box-shadow:
+
+0 10px 25px
+
+rgba(37,99,235,.2);
+
+}
+@keyframes fadeUp{
+
+from{
+
+opacity:0;
+
+transform:translateY(20px);
+
+}
+
+to{
+
+opacity:1;
+
+transform:translateY(0);
+
+}
+
+}
+
+.section{
+
+animation:fadeUp .5s ease;
+
+}
+
+.stat-card{
+
+animation:fadeUp .6s ease;
+
+}
+
+.chart-card{
+
+animation:fadeUp .7s ease;
 
 }
