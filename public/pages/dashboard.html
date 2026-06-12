@@ -115,65 +115,327 @@ href="/pages/settings.html">
 
     <main class="main">
 
-        <!-- TOPBAR -->
+       <!-- PREMIUM TOPBAR -->
 
-        <div class="topbar">
+<div class="topbar">
 
-            <div class="search">
+    <div class="search">
 
-                <i class="ti ti-search"></i>
+        <i class="ti ti-search"></i>
 
-                <input
-                type="text"
-                id="searchInput"
-                placeholder="Search employees...">
+        <input
+        type="text"
+        id="searchInput"
+        placeholder="Search employees, projects, tasks...">
 
-            </div>
+    </div>
 
-            <div class="top-actions">
+    <div class="top-actions">
 
-                <button id="darkModeBtn">
+        <!-- Notification -->
 
-                    <i class="ti ti-moon"></i>
+        <button
+        style="
+        position:relative;
+        ">
 
-                </button>
+            <i class="ti ti-bell"></i>
 
-                <div class="profile">
+            <span
+            style="
+            position:absolute;
+            top:5px;
+            right:5px;
+            width:10px;
+            height:10px;
+            background:red;
+            border-radius:50%;
+            ">
 
-                    <img
-                    src="https://i.pravatar.cc/100?img=12">
+            </span>
 
-                    <div>
+        </button>
 
-                        <h4>
-                            Admin
-                        </h4>
+        <!-- Dark Mode -->
 
-                        <p>
-                            HR Manager
-                        </p>
+        <button id="darkModeBtn">
 
-                    </div>
+            <i class="ti ti-moon"></i>
 
-                </div>
+        </button>
+
+        <!-- Profile -->
+
+        <div class="profile">
+
+            <img
+            src="https://i.pravatar.cc/100?img=12">
+
+            <div>
+
+                <h4>
+
+                    Welcome 👋
+
+                </h4>
+
+                <p>
+
+                    Admin Dashboard
+
+                </p>
 
             </div>
 
         </div>
 
-        <!-- PAGE TITLE -->
+    </div>
 
-        <div class="page-title">
+</div>
 
-            <h1>
-                Employee Dashboard
+            
+        <!-- HERO HEADER -->
+
+<div class="page-title">
+
+    <div style="
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:20px;
+    background:linear-gradient(135deg,#2563eb,#7c3aed);
+    color:white;
+    padding:30px;
+    border-radius:24px;
+    box-shadow:0 15px 35px rgba(37,99,235,.25);
+    ">
+
+        <div>
+
+            <h1 style="font-size:42px;">
+
+                👋 Welcome Back, Admin
+
             </h1>
 
-            <p>
-                Manage employees, analytics and attendance
+            <p style="margin-top:10px;color:#e0e7ff;">
+
+                Manage employees, projects, attendance and analytics from one place.
+
             </p>
 
         </div>
+
+        <div style="text-align:right;">
+
+            <h2 id="liveDate"></h2>
+
+            <h3 id="liveTime"></h3>
+
+        </div>
+
+    </div>
+
+</div>
+
+   <!-- QUICK ACTIONS -->
+
+<div class="section">
+
+    <div class="section-header">
+
+        <h2>
+
+            🚀 Quick Actions
+
+        </h2>
+
+    </div>
+
+    <div style="
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+
+    gap:20px;
+
+    ">
+
+        <div
+class="stat-card"
+style="cursor:pointer;"
+onclick="window.location.href='/pages/employees.html'">
+
+            <div class="stat-icon blue">
+
+                <i class="ti ti-user-plus"></i>
+
+            </div>
+
+            <div>
+
+                <h3>Add Employee</h3>
+
+                <p>Create a new employee profile</p>
+
+            </div>
+
+        </div>
+
+        <div
+class="stat-card"
+style="cursor:pointer;"
+onclick="window.location.href='/pages/projects.html'">
+
+            <div class="stat-icon green">
+
+                <i class="ti ti-folder-plus"></i>
+
+            </div>
+
+            <div>
+
+                <h3>Create Project</h3>
+
+                <p>Assign and manage projects</p>
+
+            </div>
+
+        </div>
+
+        <div
+class="stat-card"
+style="cursor:pointer;"
+onclick="window.location.href='/pages/attendance.html'">
+
+            <div class="stat-icon orange">
+
+                <i class="ti ti-calendar-check"></i>
+
+            </div>
+
+            <div>
+
+                <h3>Attendance</h3>
+
+                <p>View daily attendance</p>
+
+            </div>
+
+        </div>
+
+        <div
+class="stat-card"
+style="cursor:pointer;"
+onclick="window.location.href='/pages/analytics.html'">
+
+            <div class="stat-icon red">
+
+                <i class="ti ti-chart-line"></i>
+
+            </div>
+
+            <div>
+
+                <h3>Analytics</h3>
+
+                <p>Check employee insights</p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+  <!-- SYSTEM OVERVIEW -->
+
+<div class="section">
+
+    <div class="section-header">
+
+        <h2>
+
+            ⚡ System Overview
+
+        </h2>
+
+    </div>
+
+    <div style="
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:20px;
+    ">
+
+        <div class="activity">
+
+            <h3 style="color:#10b981;">
+
+                🟢 Server Status
+
+            </h3>
+
+            <p>
+
+                Online
+
+            </p>
+
+        </div>
+
+        <div class="activity">
+
+            <h3 style="color:#2563eb;">
+
+                💾 Database
+
+            </h3>
+
+            <p>
+
+                MongoDB Connected
+
+            </p>
+
+        </div>
+
+        <div class="activity">
+
+            <h3 style="color:#f59e0b;">
+
+                📅 Today's Date
+
+            </h3>
+
+            <p id="todayDate">
+
+            </p>
+
+        </div>
+
+        <div class="activity">
+
+            <h3 style="color:#8b5cf6;">
+
+                🚀 Version
+
+            </h3>
+
+            <p>
+
+                KEEP.Track v1.0
+
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
 
         <!-- STATS -->
 
@@ -611,7 +873,29 @@ class="profile-avatar">
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.umd.min.js"></script>
+<script>
 
+function updateClock(){
+
+const now=new Date();
+document.getElementById("todayDate").innerHTML =
+now.toDateString();
+
+document.getElementById("liveDate").innerHTML=
+
+now.toLocaleDateString();
+
+document.getElementById("liveTime").innerHTML=
+
+now.toLocaleTimeString();
+
+}
+
+updateClock();
+
+setInterval(updateClock,1000);
+
+</script>
 <script src="../js/dashboard.js"></script>
 
 </body>
