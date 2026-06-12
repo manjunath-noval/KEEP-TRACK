@@ -99,32 +99,75 @@ Settings
 
 <div class="page-title">
 
+<div
+style="
+background:linear-gradient(135deg,#10b981,#2563eb);
+padding:30px;
+border-radius:24px;
+color:white;
+display:flex;
+justify-content:space-between;
+align-items:center;
+flex-wrap:wrap;
+">
+
+<div>
+
 <h1>
-Attendance
+
+📅 Attendance Dashboard
+
 </h1>
 
-<p>
-Employee attendance records
+<p
+style="
+margin-top:10px;
+color:#dbeafe;
+">
+
+Monitor employee attendance and working hours.
+
 </p>
+
+</div>
+
+<div>
+
+<h2 id="attendanceDate"></h2>
+
+<h3 id="attendanceTime"></h3>
+
+</div>
+
+</div>
 
 </div>
 
 <div class="section">
 
 <h2>
-Attendance History
+
+📋 Attendance Records
+
 </h2>
 
-<table style="margin-top:20px;width:100%;">
+<table
+style="
+margin-top:25px;
+width:100%;
+border-collapse:collapse;
+overflow:hidden;
+border-radius:18px;
+">
 
 <thead>
 
 <tr>
 
-<th>Employee</th>
-<th>Date</th>
-<th>Check In</th>
-<th>Check Out</th>
+<th>👤 Employee</th>
+<th>📅 Date</th>
+<th>🟢 Check In</th>
+<th>🔴 Check Out</th>
 
 </tr>
 
@@ -134,9 +177,9 @@ Attendance History
 
 <tr>
 
-<td colspan="3">
+<td colspan="4">
 
-No Attendance Data
+📅 No Attendance Data
 
 </td>
 
@@ -177,9 +220,9 @@ table.innerHTML = `
 
 <tr>
 
-<td colspan="3">
+<td colspan="4">
 
-No Attendance Data
+📭 No Attendance Records Found
 
 </td>
 
@@ -196,19 +239,29 @@ table.innerHTML += `
 <tr>
 
 <td>
-${item.employeeEmail}
+
+👤 ${item.employeeEmail}
+
 </td>
 
 <td>
-${item.date}
+
+📅 ${item.date}
+
 </td>
 
-<td>
-${item.checkIn || "-"}
+<td
+style="color:#10b981;">
+
+${item.checkIn || "--"}
+
 </td>
 
-<td>
-${item.checkOut || "-"}
+<td
+style="color:#ef4444;">
+
+${item.checkOut || "--"}
+
 </td>
 
 </tr>
@@ -218,6 +271,28 @@ ${item.checkOut || "-"}
 });
 
 }
+function updateAttendanceClock(){
+
+const now = new Date();
+
+document.getElementById(
+"attendanceDate"
+).innerHTML =
+now.toLocaleDateString();
+
+document.getElementById(
+"attendanceTime"
+).innerHTML =
+now.toLocaleTimeString();
+
+}
+
+updateAttendanceClock();
+
+setInterval(
+updateAttendanceClock,
+1000
+);
 
 loadAttendance();
 
