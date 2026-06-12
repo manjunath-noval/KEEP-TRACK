@@ -1207,3 +1207,14 @@ animation:fadeUp .6s ease;
 animation:fadeUp .7s ease;
 
 }
+.sidebar nav a{
+
+transition:.3s;
+
+}
+
+.sidebar nav a:hover{
+
+transform:translateX(6px);
+
+}
